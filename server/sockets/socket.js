@@ -1,14 +1,16 @@
 /* All of the machinery required to work our websockets. */
 
-const WebSocket = require("ws");
-const url = require("url");
-const querystring = require("querystring");
-const socketActions = require("./socketActions");
-const Rooms = require("../engine/rooms");
-const { logger } = require("../logger");
+import WebSocket from "ws";
+import url from "url";
+import querystring from "querystring";
+import socketActions from "./socketActions";
+import Rooms from "../engine/rooms";
+import { logger } from "../logger";
 
+/** The websocket servers that run the application - one for each game room. */
 const socketServers = {};
 
+/** Determine whether a string is valid JSON. */
 function isJSON(str) {
   try {
     JSON.parse(str);
@@ -18,11 +20,11 @@ function isJSON(str) {
   return true;
 }
 
+/** Websocket frequency configuration. */
 const PING_INTERVAL = 10000;
-
 const MAX_INACTIVE_PINGS = 2;
 
-// Given a room name, make a socket for the room and add listeners.
+/** Given a room name, make a socket for the room and add listeners. */
 function makeRoomSocket(name) {
   logger.info(`Opening WebSocket server for room ${name}.`);
 
@@ -40,11 +42,13 @@ function makeRoomSocket(name) {
       ws.isAlive = true;
     });
 
+    /** When the websocket connection closes, the user has left the room. */
     ws.on("close", () => {
       logger.info(`User with id ${userId} left room ${name}.`);
       socketActions.disconnect(wss, null, { roomName: name, userId });
     });
 
+    /** When receiving a websocket message, call an action with the provided type. */
     ws.on("message", (msg) => {
       if (isJSON(msg)) {
         const message = JSON.parse(msg);
@@ -65,6 +69,7 @@ function makeRoomSocket(name) {
 
   let inactivePings = 0;
 
+  /** Set a pinging interval for each client to ensure they're still connected. */
   wss.interval = setInterval(() => {
     logger.debug(`Pinging clients of room ${name}...`);
     let hasActive = false;
@@ -89,6 +94,7 @@ function makeRoomSocket(name) {
     }
   }, PING_INTERVAL);
 
+  /** Delete the room when the websocket server is closed entirely. */
   wss.on("close", () => {
     logger.info(`Closing WebSocket server and deleting room ${name}.`);
     wss.clients.forEach((ws) => ws.terminate());
@@ -101,6 +107,7 @@ function makeRoomSocket(name) {
 }
 
 // Called when an HTTP request is elevated to a WebSocket connection.
+// Allows the user who's upgraded to create or join a room.
 function onUpgrade(request, socket, head) {
   const { room } = querystring.parse(url.parse(request.url).query);
 
@@ -124,4 +131,4 @@ function onUpgrade(request, socket, head) {
   });
 }
 
-module.exports = onUpgrade;
+export default onUpgrade;

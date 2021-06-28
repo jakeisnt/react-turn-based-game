@@ -1,6 +1,7 @@
 import PropTypes from "./prop-types";
 import useStyles from "./styles";
 
+/** A controlled Text Input component. */
 function TextInput({ value, placeholder, onKeyUp, onInput }) {
   const classes = useStyles();
   return (

@@ -410,7 +410,7 @@ module.exports = function (webpackEnv) {
                 ],
 
                 plugins: [
-                  "@babel/plugin-proposal-class-properties",
+                  require.resolve("@babel/plugin-proposal-class-properties"),
                   [
                     require.resolve("babel-plugin-named-asset-import"),
                     {
@@ -453,6 +453,24 @@ module.exports = function (webpackEnv) {
                     { helpers: true },
                   ],
                 ],
+                plugins: [
+                  require.resolve("@babel/plugin-proposal-class-properties"),
+                  // [
+                  //   require.resolve("babel-plugin-named-asset-import"),
+                  //   {
+                  //     loaderMap: {
+                  //       svg: {
+                  //         ReactComponent:
+                  //           "@svgr/webpack?-svgo,+titleProp,+ref![path]",
+                  //       },
+                  //     },
+                  //   },
+                  // ],
+                  // isEnvDevelopment &&
+                  //   shouldUseReactRefresh &&
+                  //   require.resolve("react-refresh/babel"),
+                ],
+                // .filter(Boolean),
                 cacheDirectory: true,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,

@@ -1,9 +1,9 @@
-const WebSocket = require("ws");
-const Rooms = require("../engine/rooms");
-const { spec, classes } = require("../api");
-const { logger } = require("../logger");
+import WebSocket from "ws";
+import Rooms from "../engine/rooms";
+import { spec, classes } from "../api";
+import { logger } from "../logger";
 
-/**  Effectively the standard library. */
+/**  Broadcasts a JS Object message to each client of the websocket. */
 function broadcast(wss, message) {
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
@@ -12,11 +12,13 @@ function broadcast(wss, message) {
   });
 }
 
+/** Broadcast a 'users' message to the websocket. */
 function users(wss, message, { roomName }) {
   logger.debug("Groadcasting user's message");
   broadcast(wss, { type: "users", payload: Rooms.getUsers(roomName) });
 }
 
+/** Broadcast a 'game' message - typically a game action - to the socket. */
 function game(wss, message, { roomName }) {
   logger.debug("Broadcasting game message");
   broadcast(wss, { type: "game", payload: Rooms.getGameState(roomName) });
@@ -27,6 +29,8 @@ const Actions = {
   users,
   game,
 };
+
+/** Generate various websocket endpoints from API utilities. */
 
 // name of function/endpoint: names of arguments expected in socket payload
 function generateEndpoints(config) {
@@ -52,4 +56,4 @@ function generateEndpoints(config) {
 }
 const socketActions = generateEndpoints(spec);
 
-module.exports = socketActions;
+export default socketActions;

@@ -4,6 +4,10 @@ import User from "./User";
 import useStyles from "./styles";
 import { Button, Box } from "../../../components";
 
+/** A list of spectators in the game.
+* Assume every user provided in the list of users is a spectator.
+* */
+
 function SpectatorList({ users, capacity, myId, userIsMod }) {
   const classes = useStyles();
   const { unspectateAll } = useGameActions();

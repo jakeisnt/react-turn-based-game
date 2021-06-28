@@ -4,6 +4,7 @@ import WSConnectionStatus from "../../components/WSConnectionStatus";
 import Room from "./Room";
 import { SocketProvider } from "../../context/socketContext";
 
+/** Wraps a room to ensure the user is warned before the page is left. */
 function RoomContainer() {
   const { name: roomName } = useParams();
 

@@ -5,16 +5,17 @@ import { useSocket, useUser, useGameActions } from "../../context";
 import { UserList, SpectatorList, PlayerList } from "./Users";
 import Game from "./Game";
 
+/** The main room of the application; also known as the lobby.
+* This component and its descendants contain most of the networking and game logic.
+* */
+
 import { Button, Page } from "../../components";
 
+/** Determines whether the list of players contains a spectator with the provided userId. */
 function hasSpectator(userId, players) {
   const meHopefully = players.filter(({ id }) => id === userId);
   return meHopefully && meHopefully[0] && !meHopefully.spectate;
 }
-
-/* When this page loads, add a message to warn when unloading. */
-
-/* Remove the listener when this component unmounts. */
 
 function Room() {
   const { error, lastMessage, roomName } = useSocket("users");

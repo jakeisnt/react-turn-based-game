@@ -4,6 +4,9 @@ import { useSocket, useGameActions } from "../../context/socketContext";
 import { useUser } from "../../context/userContext";
 import { Button, Box, Subtitle, Text } from "../../components";
 
+/** This component and its descendants contain all of the logic for playing a game. */
+
+/** Determines whether the list of players contains a player with the provided userId. */
 function hasPlayer(userId, players) {
   const meHopefully = players.filter(({ id }) => id === userId);
   return meHopefully && meHopefully[0] && !meHopefully.spectate;

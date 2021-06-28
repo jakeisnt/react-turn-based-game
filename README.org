@@ -2,24 +2,18 @@
 
 This sets out to be a complete starter kit for building React and Node.js turn-based games.
 
-* (Desired) Features?
-- Create and join rooms
-- See all players within your current room
-- Pass the turn to the next player in the room
-- Reset room after game is finished
 * Development
-This is a standard full stack JavaScript app build with `yarn` and organized with yarn workspaces.
-Frontend and backend are found in `packages/client` and `packages/server`, respectively.
+This is a standard full stack JavaScript monorepo build with `yarn` and organized with lerna.
+Frontend and backend are found in `client/` and `server/`, respectively.
 
 ** Start developing:
-1. Make sure you have `yarn` [[https://classic.yarnpkg.com/en/docs/install/#debian-stable][installed globally]] and an [[https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint][`eslint`]] plugin installed for your editor of choice.
+1. Make sure you have `yarn` [[https://classic.yarnpkg.com/en/docs/install/#debian-stable][installed globally]] and an [[https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint][`eslint`]] plugin, or a language server protocol plugin that will allow you to use `tsserver`, installed for your editor of choice. VSCode is your go-to option if you're newer to software development.
 2. Run `yarn install` in the root directory of the entire project to install all dependencies.
 3. Run `yarn start` in the root directory to start up the hot reloading process.
 
 * Technologies
 ** Front-end
 - [[https://reactjs.org/][React]] functional components for templating and structure. Industry standard.
-- [[https://xstate.js.org/][XState]] for state management, local and global. This is excellent for game development.
 - CSS-in-JS [[https://cssinjs.org/?v=v10.6.0][(JSS)]]: This is my personal preference, but it's not something we have to use.
 ** Backend
 - [[http://expressjs.com/][Express API]] with websockets. I think it's best to use websockets and in-memory data as much as we can, because there isn't much of a reason to create accounts and persist data yet (IMO).

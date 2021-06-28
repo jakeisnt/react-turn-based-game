@@ -1,6 +1,7 @@
 import PropTypes from "./prop-types";
 import useStyles from "./styles";
 
+/** A basic box. The backbone of the appearance of the site. */
 function Box({ error, text, children }) {
   const classes = useStyles(error);
   return (

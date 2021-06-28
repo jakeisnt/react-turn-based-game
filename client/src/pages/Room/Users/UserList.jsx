@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import User from "./User";
 import { Box } from "../../../components";
 
+/** A list of users in the game. */
+
 function UserList({ users, title, capacity, myId, userIsMod }) {
   return users && users.length > 0 ? (
     <>

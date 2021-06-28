@@ -1,6 +1,8 @@
-const Users = require("./users");
-const Game = require("./games");
-const { getParamNames, getFuncsOfClass } = require("./utils");
+/** Converts the classes to APIs for use here and externally. */
+
+import Users from "./users";
+import Game from "./games";
+import { getParamNames, getFuncsOfClass } from "./utils";
 
 function classToAPI(clss) {
   return getFuncsOfClass(clss).reduce((acc, funcName) => {
@@ -21,4 +23,4 @@ const classes = {
   game: Game,
 };
 
-module.exports = { spec, classes };
+export { spec, classes };

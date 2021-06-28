@@ -1,7 +1,9 @@
-const express = require("express");
-const Users = require("../engine/users");
+import express from "express";
+import Users from "../engine/users";
 
 const router = express.Router();
+
+/** Provide HTTP functionality for creating, fetching and renaming users. */
 
 /* GET new user. */
 router.get("/new", (req, res) => {
@@ -22,4 +24,4 @@ router.put("/setName", (req, res) => {
   return res.status(404).send(`User ${req.query.id} not found`);
 });
 
-module.exports = router;
+export default router;

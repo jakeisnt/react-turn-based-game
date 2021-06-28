@@ -4,6 +4,8 @@ import { createUseStyles } from "react-jss";
 import RippleLoader from "./RippleLoader";
 import { useSocket } from "../context/socketContext";
 
+/** Component that displays a status message if websocket connections aren't working out. */
+
 const Status = {
   ERR: "error",
   WARN: "warn",
@@ -48,7 +50,6 @@ const connStyles = createUseStyles((theme) => ({
   },
 }));
 
-/** Status message to display if websocket connections aren't working out. */
 function WSConnectionStatus() {
   const { socketState: state } = useSocket();
   const status = connectionStatus[state];

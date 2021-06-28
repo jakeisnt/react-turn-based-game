@@ -1,13 +1,35 @@
-#!/usr/bin/env node
-
+#!/usr/bin/env node --experimental-specifier-resolution=node
 /**
  * Module dependencies.
  */
 
-const app = require("../app");
-const debug = require("debug")("server:server");
-const http = require("http");
-const onUpgrade = require("../sockets/socket.js");
+import debugM from "debug";
+
+import http from "http";
+import app from "../app";
+import onUpgrade from "../sockets/socket";
+
+const debug = debugM("server:server");
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  const port = parseInt(val, 10);
+
+  if (Number.isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
 
 /**
  * Get port from environment and store in Express.
@@ -21,35 +43,6 @@ app.set("port", port);
  */
 
 const server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
-server.on("upgrade", onUpgrade);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
 
 /**
  * Event listener for HTTP server "error" event.
@@ -86,3 +79,12 @@ function onListening() {
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
 }
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
+server.on("upgrade", onUpgrade);

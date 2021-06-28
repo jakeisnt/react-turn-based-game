@@ -1,5 +1,7 @@
 import { createUseStyles } from "react-jss";
 
+/** A fancy animated ripple loader. */
+
 const useStyles = createUseStyles((theme) => ({
   ripple: {
     display: "inline-block",

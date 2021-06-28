@@ -1,10 +1,13 @@
-const game = require("../game");
-const Users = require("./users");
+import game from "../game";
+import Users from "./users";
 
+
+/** Get the initial state of the players. */
 function getInitialPlayerState(player) {
   return game.initialState.player(player);
 }
 
+/** Get the initial state of the game. */
 function getInitialGameState(players) {
   return game.initialState.game(players);
 }
@@ -28,6 +31,7 @@ function getWinners(gameState, playerState) {
   });
 }
 
+// Represents a player who has been in the game
 class GamePlayer {
   constructor(player) {
     this.id = player.id;
@@ -36,6 +40,7 @@ class GamePlayer {
   }
 }
 
+// Represents the game
 class Game {
   constructor(players) {
     this.players = players.map((player) => new GamePlayer(player));
@@ -44,14 +49,17 @@ class Game {
     this.stopped = false;
   }
 
+  // is the game over?
   isOver() {
     return this.stopped || isGameOver(this.gameState, this.players);
   }
 
+  // add a player to the game
   addPlayer(player) {
     this.players.push(new GamePlayer(player));
   }
 
+  // produce the game state
   getGameState() {
     return {
       players: this.players,
@@ -62,18 +70,22 @@ class Game {
     };
   }
 
+  // start the game
   start() {
     this.stopped = false;
   }
 
+  // stop the game
   stop() {
     this.stopped = true;
   }
 
+  // determines whether the provided playerId is the current player
   isCurrentPlayer(playerId) {
     return playerId === this.players[this.curPlayer].id;
   }
 
+  // pass the turn from playerId to the next player in turn
   passTurn(playerId) {
     if (!this.isCurrentPlayer(playerId)) return undefined;
     this.curPlayer = (this.curPlayer + 1) % this.players.length;
@@ -85,6 +97,7 @@ class Game {
     return cp;
   }
 
+  // commit a declared game action with the provided payload as context
   takeAction(playerId, action, payload) {
     if (!this.isCurrentPlayer(playerId)) return undefined;
     const { gameState, playerState, passTurn } = takeAction(
@@ -101,4 +114,4 @@ class Game {
   }
 }
 
-module.exports = Game;
+export default Game;

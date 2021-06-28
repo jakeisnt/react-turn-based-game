@@ -61,4 +61,4 @@ const game = {
     players.filter(({ state }) => state.clickedLast),
 };
 
-module.exports = game;
+export default game;

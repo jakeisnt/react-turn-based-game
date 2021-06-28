@@ -2,6 +2,9 @@ import PropTypes from "prop-types";
 import User from "./User";
 import { Box } from "../../../components";
 
+/** A list of active players in the game.
+* Assume every user provided in the list of users is a player.
+* */
 function PlayerList({ users, capacity, myId, userIsMod }) {
   return users && users.length > 0 ? (
     <>

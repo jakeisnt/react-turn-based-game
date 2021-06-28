@@ -4,6 +4,9 @@ import theme from "./theme";
 import { Home, Room, Create, Join, Profile, About } from "./pages";
 import { UserProvider } from "./context/userContext";
 
+/** The root of our application. Provides a user configuration on load
+* and client side routing for all of the pages.*/
+
 function App() {
   return (
     <div className="App">

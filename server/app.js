@@ -1,12 +1,12 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const { logger, expressLogger } = require('./logger');
+import createError from "http-errors";
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import { expressLogger } from "./logger";
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const roomRouter = require("./routes/room");
+import indexRouter from "./routes/index";
+import usersRouter from "./routes/users";
+import roomRouter from "./routes/room";
 
 const app = express();
 
@@ -14,7 +14,9 @@ app.use(expressLogger);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+
+const dirname = path.resolve(path.dirname(""));
+app.use(express.static(path.join(dirname, "public")));
 
 // api requests won't work without this
 // TODO: remove this for security reasons later
@@ -47,4 +49,4 @@ app.use((err, req, res) => {
   res.render("error");
 });
 
-module.exports = app;
+export default app;

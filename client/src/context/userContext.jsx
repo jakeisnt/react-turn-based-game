@@ -10,9 +10,10 @@ import Cookies from "universal-cookie";
 
 const UserContext = createContext(null);
 
-function getUser() {
+/** Generates a new user, informing the backend of their existence. */
+async function getUser() {
   const cookies = new Cookies();
-  function getNewUser() {
+  async function getNewUser() {
     return fetch(`/users/new`)
       .then((res) => res.json())
       .then((res) => {
@@ -29,6 +30,7 @@ function getUser() {
   return getNewUser();
 }
 
+/** Provides a userId to the client when the Provider is rendered. */
 function UserProvider({ children }) {
   const [userId, setUserId] = useState(null);
   const [user, setUser] = useState(null);
@@ -70,7 +72,7 @@ UserProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-/** Returns a context containing a stateful user and functions to modify it. */
+/** Provides a context containing a stateful user and functions to modify it. */
 function useUser() {
   const context = useContext(UserContext);
   if (context === undefined) {

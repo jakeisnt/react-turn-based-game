@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Page, TextInput } from "../components";
 
+/** This is the Join page - used when a player wants to join an existing room. */
 function Join() {
   const [name, setName] = useState("");
   const history = useHistory();
