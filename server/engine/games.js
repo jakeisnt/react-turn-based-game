@@ -70,7 +70,13 @@ class Game {
       curPlayer: this.players[this.curPlayer].id,
       game: this.gameState.pub,
       isOver: this.isOver(),
-      winners: this.isOver() && getWinners(this.gameState, this.players),
+      winners: (() => {
+        if (this.isOver()) {
+          return getWinners(this.gameState, this.players)
+        }
+        return false;
+      }
+      )(),
     };
   }
 
